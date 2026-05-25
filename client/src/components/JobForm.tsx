@@ -47,6 +47,13 @@ export default function JobForm({
           className={inputClassName}
         />
 
+        <input
+          value={currentJob.jobUrl}
+          onChange={(e) => onChange({ ...currentJob, jobUrl: e.target.value })}
+          placeholder="Job posting URL"
+          className={inputClassName}
+        />
+
         <select
           value={currentJob.status}
           onChange={(e) =>

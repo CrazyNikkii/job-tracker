@@ -32,6 +32,7 @@ export default function App() {
     company: "",
     position: "",
     status: "Interested",
+    jobUrl: "",
   });
 
   useEffect(() => {
@@ -73,7 +74,12 @@ export default function App() {
   };
 
   const resetForm = () => {
-    setCurrentJob({ company: "", position: "", status: "Interested" });
+    setCurrentJob({
+      company: "",
+      position: "",
+      status: "Interested",
+      jobUrl: "",
+    });
     setEditingId(null);
     setShowForm(false);
   };

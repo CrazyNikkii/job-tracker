@@ -10,4 +10,5 @@ export interface JobApplication {
   company: string;
   position: string;
   status: JobStatus;
+  jobUrl: string;
 }
