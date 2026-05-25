@@ -88,11 +88,20 @@ export default function App() {
         </button>
       </div>
 
-      <div className="space-y-3 mb-8">
-        {jobs.map((job) => (
-          <JobCard key={job.id} job={job} onClick={editJob} />
-        ))}
-      </div>
+      {jobs.length > 0 ? (
+        <div className="space-y-3 mb-8">
+          {jobs.map((job) => (
+            <JobCard key={job.id} job={job} onClick={editJob} />
+          ))}
+        </div>
+      ) : (
+        <div className="p-6 mb-8 border border-dashed rounded-lg text-center text-gray-600">
+          <p className="font-medium text-gray-800">No job applications yet.</p>
+          <p className="text-sm mt-1">
+            Add your first demo job to start tracking.
+          </p>
+        </div>
+      )}
 
       {showForm ? (
         <JobForm
