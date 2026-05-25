@@ -1,11 +1,25 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import JobCard from "./components/JobCard";
 import JobForm from "./components/JobForm";
 import { demoJobs } from "./data/demoJobs";
-import type { JobApplication, JobStatus } from "./types";
+import type { JobApplication } from "./types";
+
+const LOCAL_STORAGE_KEY = "job-tracker-demo-jobs";
 
 export default function App() {
-  const [jobs, setJobs] = useState<JobApplication[]>(demoJobs);
+  const [jobs, setJobs] = useState<JobApplication[]>(() => {
+    const savedJobs = localStorage.getItem(LOCAL_STORAGE_KEY);
+
+    if (!savedJobs) {
+      return demoJobs;
+    }
+
+    try {
+      return JSON.parse(savedJobs) as JobApplication[];
+    } catch {
+      return demoJobs;
+    }
+  });
 
   const [showForm, setShowForm] = useState(false);
   const [editingId, setEditingId] = useState<string | null>(null);
@@ -16,6 +30,10 @@ export default function App() {
     position: "",
     status: "Interested",
   });
+
+  useEffect(() => {
+    localStorage.setItem(LOCAL_STORAGE_KEY, JSON.stringify(jobs));
+  }, [jobs]);
 
   const saveJob = () => {
     if (!currentJob.company.trim()) return;
