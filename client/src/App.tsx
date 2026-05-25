@@ -1,5 +1,5 @@
 import { useState } from "react";
-import StatusBadge from "./components/StatusBadge";
+import JobCard from "./components/JobCard";
 import { statusOptions } from "./constants/jobStatuses";
 import { demoJobs } from "./data/demoJobs";
 import type { JobApplication, JobStatus } from "./types";
@@ -51,19 +51,7 @@ export default function App() {
 
       <div className="space-y-3 mb-8">
         {jobs.map((job) => (
-          <div
-            key={job.id}
-            className="p-4 border rounded-lg shadow-sm hover:shadow-md transition-shadow cursor-pointer"
-            onClick={() => editJob(job)}
-          >
-            <div className="flex justify-between items-center">
-              <div>
-                <h3 className="font-medium">{job.company}</h3>
-                <p className="text-gray-600 text-sm">{job.position}</p>
-              </div>
-              <StatusBadge status={job.status} />
-            </div>
-          </div>
+          <JobCard key={job.id} job={job} onClick={editJob} />
         ))}
       </div>
 
