@@ -1,22 +1,10 @@
 import { useState } from "react";
 import type { JobApplication, JobStatus } from "./types";
 import { statusColors, statusOptions } from "./constants/jobStatuses";
+import { demoJobs } from "./data/demoJobs";
 
 export default function App() {
-  const [jobs, setJobs] = useState<JobApplication[]>([
-    {
-      id: "1",
-      company: "TechCorp",
-      position: "Frontend Dev",
-      status: "Applied",
-    },
-    {
-      id: "2",
-      company: "DesignHub",
-      position: "UI Designer",
-      status: "Interview Scheduled",
-    },
-  ]);
+  const [jobs, setJobs] = useState<JobApplication[]>(demoJobs);
 
   const [showForm, setShowForm] = useState(false);
   const [editingId, setEditingId] = useState<string | null>(null);
