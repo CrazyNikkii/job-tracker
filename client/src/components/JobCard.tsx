@@ -14,8 +14,8 @@ export default function JobCard({ job, onClick }: JobCardProps) {
     >
       <div className="flex justify-between items-center">
         <div>
-          <h3 className="font-medium">{job.company}</h3>
-          <p className="text-gray-600 text-sm">{job.position}</p>
+          <h3 className="font-medium text-white">{job.company}</h3>
+          <p className="mt-1 text-sm text-gray-300">{job.position}</p>
         </div>
 
         <StatusBadge status={job.status} />

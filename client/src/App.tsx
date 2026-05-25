@@ -1,4 +1,5 @@
 import { useEffect, useState } from "react";
+import DashboardStats from "./components/DashboardStats";
 import JobCard from "./components/JobCard";
 import JobForm from "./components/JobForm";
 import { demoJobs } from "./data/demoJobs";
@@ -96,6 +97,7 @@ export default function App() {
             Reset Demo
           </button>
         </div>
+        <DashboardStats jobs={jobs} />
 
         {jobs.length > 0 ? (
           <div className="mb-8 space-y-3">
