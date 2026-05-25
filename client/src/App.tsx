@@ -3,9 +3,10 @@ import DashboardStats from "./components/DashboardStats";
 import JobCard from "./components/JobCard";
 import JobForm from "./components/JobForm";
 import { demoJobs } from "./data/demoJobs";
-import type { JobApplication } from "./types";
+import type { JobApplication, JobStatus } from "./types";
 
 const LOCAL_STORAGE_KEY = "job-tracker-demo-jobs";
+type StatusFilter = "All" | JobStatus;
 
 export default function App() {
   const [jobs, setJobs] = useState<JobApplication[]>(() => {
@@ -24,6 +25,7 @@ export default function App() {
 
   const [showForm, setShowForm] = useState(false);
   const [editingId, setEditingId] = useState<string | null>(null);
+  const [statusFilter, setStatusFilter] = useState<StatusFilter>("All");
   const [currentJob, setCurrentJob] = useState<
     Omit<JobApplication, "id"> & { id?: string }
   >({
@@ -76,6 +78,11 @@ export default function App() {
     setShowForm(false);
   };
 
+  const visibleJobs =
+    statusFilter === "All"
+      ? jobs
+      : jobs.filter((job) => job.status === statusFilter);
+
   return (
     <div className="min-h-screen px-4 py-10 text-white">
       <div className="mx-auto max-w-3xl rounded-3xl border border-[#03fcf0]/25 bg-[#3a3f42] p-6 shadow-2xl">
@@ -99,17 +106,48 @@ export default function App() {
         </div>
         <DashboardStats jobs={jobs} />
 
-        {jobs.length > 0 ? (
+        <div className="mb-6 flex flex-wrap gap-2">
+          {(
+            [
+              "All",
+              "Interested",
+              "Applied",
+              "Interview Scheduled",
+              "Rejected",
+              "Accepted",
+            ] as StatusFilter[]
+          ).map((status) => (
+            <button
+              key={status}
+              onClick={() => setStatusFilter(status)}
+              className={`rounded-full border px-4 py-2 text-sm font-semibold transition-colors ${
+                statusFilter === status
+                  ? "border-[#03fcf0] bg-[#03fcf0] text-[#2f3336]"
+                  : "border-white/15 text-gray-300 hover:border-[#03fcf0] hover:text-[#03fcf0]"
+              }`}
+            >
+              {status}
+            </button>
+          ))}
+        </div>
+
+        {visibleJobs.length > 0 ? (
           <div className="mb-8 space-y-3">
-            {jobs.map((job) => (
+            {visibleJobs.map((job) => (
               <JobCard key={job.id} job={job} onClick={editJob} />
             ))}
           </div>
         ) : (
-          <div className="mb-8 rounded-2xl border border-dashed border-slate-600 bg-slate-950/60 p-6 text-center">
-            <p className="font-medium text-white">No job applications yet.</p>
-            <p className="mt-1 text-sm text-slate-400">
-              Add your first demo job to start tracking.
+          <div className="mb-8 rounded-2xl border border-dashed border-[#03fcf0]/35 bg-[#34393c] p-6 text-center">
+            <p className="font-medium text-white">
+              {jobs.length === 0
+                ? "No job applications yet."
+                : `No ${statusFilter.toLowerCase()} jobs found.`}
+            </p>
+            <p className="mt-1 text-sm text-gray-300">
+              {jobs.length === 0
+                ? "Add your first demo job to start tracking."
+                : "Try another status filter or reset the demo."}
             </p>
           </div>
         )}
