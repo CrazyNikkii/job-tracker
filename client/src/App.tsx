@@ -64,6 +64,11 @@ export default function App() {
     resetForm();
   };
 
+  const resetDemo = () => {
+    setJobs(demoJobs);
+    resetForm();
+  };
+
   const resetForm = () => {
     setCurrentJob({ company: "", position: "", status: "Interested" });
     setEditingId(null);
@@ -72,7 +77,16 @@ export default function App() {
 
   return (
     <div className="container mx-auto p-4 max-w-2xl">
-      <h1 className="text-2xl font-bold mb-6">Job Applications</h1>
+      <div className="flex justify-between items-center mb-6">
+        <h1 className="text-2xl font-bold">Job Applications</h1>
+
+        <button
+          onClick={resetDemo}
+          className="bg-gray-200 text-gray-800 px-3 py-2 rounded hover:bg-gray-300 transition-colors text-sm"
+        >
+          Reset Demo
+        </button>
+      </div>
 
       <div className="space-y-3 mb-8">
         {jobs.map((job) => (
