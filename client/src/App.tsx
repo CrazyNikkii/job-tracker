@@ -1,7 +1,8 @@
 import { useState } from "react";
-import type { JobApplication, JobStatus } from "./types";
-import { statusColors, statusOptions } from "./constants/jobStatuses";
+import StatusBadge from "./components/StatusBadge";
+import { statusOptions } from "./constants/jobStatuses";
 import { demoJobs } from "./data/demoJobs";
+import type { JobApplication, JobStatus } from "./types";
 
 export default function App() {
   const [jobs, setJobs] = useState<JobApplication[]>(demoJobs);
@@ -60,13 +61,7 @@ export default function App() {
                 <h3 className="font-medium">{job.company}</h3>
                 <p className="text-gray-600 text-sm">{job.position}</p>
               </div>
-              <span
-                className={`px-3 py-1 text-xs rounded-full ${
-                  statusColors[job.status]
-                }`}
-              >
-                {job.status}
-              </span>
+              <StatusBadge status={job.status} />
             </div>
           </div>
         ))}
