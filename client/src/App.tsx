@@ -76,50 +76,60 @@ export default function App() {
   };
 
   return (
-    <div className="container mx-auto p-4 max-w-2xl">
-      <div className="flex justify-between items-center mb-6">
-        <h1 className="text-2xl font-bold">Job Applications</h1>
+    <div className="min-h-screen px-4 py-10 text-white">
+      <div className="mx-auto max-w-3xl rounded-3xl border border-[#03fcf0]/25 bg-[#3a3f42] p-6 shadow-2xl">
+        <div className="mb-6 flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between">
+          <div>
+            <p className="text-sm font-semibold uppercase tracking-[0.25em] text-[#03fcf0]">
+              Demo Mode
+            </p>
+            <h1 className="text-3xl font-bold text-white">Job Applications</h1>
+            <p className="mt-2 text-sm text-slate-300">
+              Track applications, interviews and outcomes in one place.
+            </p>
+          </div>
 
-        <button
-          onClick={resetDemo}
-          className="bg-gray-200 text-gray-800 px-3 py-2 rounded hover:bg-gray-300 transition-colors text-sm"
-        >
-          Reset Demo
-        </button>
+          <button
+            onClick={resetDemo}
+            className="rounded-full border border-[#03fcf0]/40 px-4 py-2 text-sm font-semibold text-[#03fcf0] transition-colors hover:bg-[#03fcf0] hover:text-slate-950"
+          >
+            Reset Demo
+          </button>
+        </div>
+
+        {jobs.length > 0 ? (
+          <div className="mb-8 space-y-3">
+            {jobs.map((job) => (
+              <JobCard key={job.id} job={job} onClick={editJob} />
+            ))}
+          </div>
+        ) : (
+          <div className="mb-8 rounded-2xl border border-dashed border-slate-600 bg-slate-950/60 p-6 text-center">
+            <p className="font-medium text-white">No job applications yet.</p>
+            <p className="mt-1 text-sm text-slate-400">
+              Add your first demo job to start tracking.
+            </p>
+          </div>
+        )}
+
+        {showForm ? (
+          <JobForm
+            currentJob={currentJob}
+            editingId={editingId}
+            onChange={setCurrentJob}
+            onSave={saveJob}
+            onCancel={resetForm}
+            onDelete={deleteJob}
+          />
+        ) : (
+          <button
+            onClick={() => setShowForm(true)}
+            className="rounded-full bg-[#03fcf0] px-5 py-2 font-semibold text-slate-950 transition-colors hover:bg-cyan-200"
+          >
+            Add New Job
+          </button>
+        )}
       </div>
-
-      {jobs.length > 0 ? (
-        <div className="space-y-3 mb-8">
-          {jobs.map((job) => (
-            <JobCard key={job.id} job={job} onClick={editJob} />
-          ))}
-        </div>
-      ) : (
-        <div className="p-6 mb-8 border border-dashed rounded-lg text-center text-gray-600">
-          <p className="font-medium text-gray-800">No job applications yet.</p>
-          <p className="text-sm mt-1">
-            Add your first demo job to start tracking.
-          </p>
-        </div>
-      )}
-
-      {showForm ? (
-        <JobForm
-          currentJob={currentJob}
-          editingId={editingId}
-          onChange={setCurrentJob}
-          onSave={saveJob}
-          onCancel={resetForm}
-          onDelete={deleteJob}
-        />
-      ) : (
-        <button
-          onClick={() => setShowForm(true)}
-          className="bg-blue-500 text-white px-4 py-2 rounded hover:bg-blue-600 transition-colors"
-        >
-          Add New Job
-        </button>
-      )}
     </div>
   );
 }

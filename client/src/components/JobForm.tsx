@@ -20,68 +20,75 @@ export default function JobForm({
   onCancel,
   onDelete,
 }: JobFormProps) {
+  const inputClassName =
+    "w-full rounded-xl border border-white/15 bg-[#2f3336] p-3 text-white placeholder:text-gray-400 outline-none transition-colors focus:border-[#03fcf0] focus:ring-2 focus:ring-[#03fcf0]/20";
+
   return (
-    <div className="p-4 border rounded-lg space-y-3 bg-white shadow-md">
-      <h2 className="font-medium mb-2">
+    <div className="rounded-2xl border border-white/15 bg-[#34393c] p-5 shadow-lg">
+      <h2 className="mb-4 text-lg font-semibold text-white">
         {editingId ? "Edit Application" : "Add New Application"}
       </h2>
 
-      <input
-        value={currentJob.company}
-        onChange={(e) => onChange({ ...currentJob, company: e.target.value })}
-        placeholder="Company name"
-        className="w-full p-2 border rounded focus:ring-2 focus:ring-blue-500 focus:border-transparent"
-        required
-      />
+      <div className="space-y-3">
+        <input
+          value={currentJob.company}
+          onChange={(e) => onChange({ ...currentJob, company: e.target.value })}
+          placeholder="Company name"
+          className={inputClassName}
+          required
+        />
 
-      <input
-        value={currentJob.position}
-        onChange={(e) => onChange({ ...currentJob, position: e.target.value })}
-        placeholder="Position"
-        className="w-full p-2 border rounded focus:ring-2 focus:ring-blue-500 focus:border-transparent"
-      />
+        <input
+          value={currentJob.position}
+          onChange={(e) =>
+            onChange({ ...currentJob, position: e.target.value })
+          }
+          placeholder="Position"
+          className={inputClassName}
+        />
 
-      <select
-        value={currentJob.status}
-        onChange={(e) =>
-          onChange({
-            ...currentJob,
-            status: e.target.value as JobStatus,
-          })
-        }
-        className="w-full p-2 border rounded focus:ring-2 focus:ring-blue-500 focus:border-transparent"
-      >
-        {statusOptions.map((option) => (
-          <option key={option} value={option}>
-            {option}
-          </option>
-        ))}
-      </select>
-
-      <div className="flex space-x-2 pt-2">
-        <button
-          onClick={onSave}
-          disabled={!currentJob.company.trim()}
-          className="bg-green-500 text-white px-4 py-2 rounded hover:bg-green-600 disabled:bg-gray-400 transition-colors"
+        <select
+          value={currentJob.status}
+          onChange={(e) =>
+            onChange({
+              ...currentJob,
+              status: e.target.value as JobStatus,
+            })
+          }
+          className={inputClassName}
         >
-          {editingId ? "Update" : "Save"}
-        </button>
+          {statusOptions.map((option) => (
+            <option key={option} value={option} className="bg-[#2f3336]">
+              {option}
+            </option>
+          ))}
+        </select>
 
-        <button
-          onClick={onCancel}
-          className="bg-gray-500 text-white px-4 py-2 rounded hover:bg-gray-600 transition-colors"
-        >
-          Cancel
-        </button>
-
-        {editingId && (
+        <div className="flex flex-wrap gap-2 pt-2">
           <button
-            onClick={onDelete}
-            className="bg-red-500 text-white px-4 py-2 rounded hover:bg-red-600 transition-colors"
+            onClick={onSave}
+            disabled={!currentJob.company.trim()}
+            className="rounded-full bg-[#03fcf0] px-5 py-2 font-semibold text-slate-950 transition-colors hover:bg-cyan-200 disabled:cursor-not-allowed disabled:bg-slate-700 disabled:text-slate-400"
           >
-            Delete
+            {editingId ? "Update" : "Save"}
           </button>
-        )}
+
+          <button
+            onClick={onCancel}
+            className="rounded-full bg-slate-700 px-5 py-2 font-semibold text-white transition-colors hover:bg-slate-600"
+          >
+            Cancel
+          </button>
+
+          {editingId && (
+            <button
+              onClick={onDelete}
+              className="rounded-full bg-red-500 px-5 py-2 font-semibold text-white transition-colors hover:bg-red-400"
+            >
+              Delete
+            </button>
+          )}
+        </div>
       </div>
     </div>
   );

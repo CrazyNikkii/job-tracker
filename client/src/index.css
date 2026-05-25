@@ -2,7 +2,44 @@
 
 @theme {
   --font-family-sans: "Inter", system-ui, sans-serif;
-  --color-primary: 59 130 246; /* blue-500 */
+  --color-primary: 3 252 240;
+}
+
+@layer base {
+  :root {
+    font-family: "Inter", system-ui, sans-serif;
+    color: #f5f7fa;
+    background: #101820;
+  }
+
+  * {
+    box-sizing: border-box;
+  }
+
+  html {
+    min-height: 100%;
+    background: #101820;
+  }
+
+  body {
+    min-width: 320px;
+    min-height: 100vh;
+    margin: 0;
+    background:
+      radial-gradient(
+        circle at top left,
+        rgba(3, 252, 240, 0.1),
+        transparent 30rem
+      ),
+      #2f3336;
+  }
+
+  button,
+  input,
+  select,
+  textarea {
+    font: inherit;
+  }
 }
 
 @layer utilities {
