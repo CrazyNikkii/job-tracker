@@ -1,15 +1,15 @@
-import { useState } from "react";
+import { BrowserRouter, Navigate, Route, Routes } from "react-router-dom";
 import DemoDashboard from "./components/DemoDashboard";
 import LandingPage from "./components/LandingPage";
 
-type AppView = "landing" | "demo";
-
 export default function App() {
-  const [view, setView] = useState<AppView>("landing");
-
-  if (view === "demo") {
-    return <DemoDashboard onBackToLanding={() => setView("landing")} />;
-  }
-
-  return <LandingPage onViewDemo={() => setView("demo")} />;
+  return (
+    <BrowserRouter>
+      <Routes>
+        <Route path="/" element={<LandingPage />} />
+        <Route path="/demo" element={<DemoDashboard />} />
+        <Route path="*" element={<Navigate to="/" replace />} />
+      </Routes>
+    </BrowserRouter>
+  );
 }

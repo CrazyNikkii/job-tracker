@@ -1,8 +1,6 @@
-interface LandingPageProps {
-  onViewDemo: () => void;
-}
+import { Link } from "react-router-dom";
 
-export default function LandingPage({ onViewDemo }: LandingPageProps) {
+export default function LandingPage() {
   return (
     <div className="min-h-screen px-4 py-10 text-white">
       <div className="mx-auto flex min-h-[80vh] max-w-5xl items-center">
@@ -23,12 +21,12 @@ export default function LandingPage({ onViewDemo }: LandingPageProps) {
           </div>
 
           <div className="mt-8 flex flex-col gap-3 sm:flex-row">
-            <button
-              onClick={onViewDemo}
-              className="rounded-full bg-[#03fcf0] px-6 py-3 font-semibold text-[#2f3336] transition-colors hover:bg-cyan-200"
+            <Link
+              to="/demo"
+              className="rounded-full bg-[#03fcf0] px-6 py-3 text-center font-semibold text-[#2f3336] transition-colors hover:bg-cyan-200"
             >
               View Demo
-            </button>
+            </Link>
 
             <button
               disabled

@@ -2,6 +2,7 @@ import { useEffect, useState } from "react";
 import DashboardStats from "./DashboardStats";
 import JobCard from "./JobCard";
 import JobForm from "./JobForm";
+import { Link } from "react-router-dom";
 import { demoJobs } from "../data/demoJobs";
 import type { JobApplication, JobStatus } from "../types";
 
@@ -9,11 +10,7 @@ const LOCAL_STORAGE_KEY = "job-tracker-demo-jobs";
 
 type StatusFilter = "All" | JobStatus;
 
-interface DemoDashboardProps {
-  onBackToLanding: () => void;
-}
-
-export default function DemoDashboard({ onBackToLanding }: DemoDashboardProps) {
+export default function DemoDashboard() {
   const [jobs, setJobs] = useState<JobApplication[]>(() => {
     const savedJobs = localStorage.getItem(LOCAL_STORAGE_KEY);
 
@@ -109,12 +106,12 @@ export default function DemoDashboard({ onBackToLanding }: DemoDashboardProps) {
           </div>
 
           <div className="flex flex-wrap gap-2">
-            <button
-              onClick={onBackToLanding}
+            <Link
+              to="/"
               className="rounded-full border border-white/15 px-4 py-2 text-sm font-semibold text-gray-300 transition-colors hover:border-[#03fcf0] hover:text-[#03fcf0]"
             >
               Back
-            </button>
+            </Link>
 
             <button
               onClick={resetDemo}
