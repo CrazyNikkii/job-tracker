@@ -1,24 +1,23 @@
 # Job Tracker
 
-A job application tracking app built with React, TypeScript, Vite and Tailwind CSS.
+A simple job application tracker built with React, TypeScript, Vite and Tailwind CSS.
 
-The project is designed for two purposes:
+The idea is pretty straightforward: I wanted a small app where I can keep track of jobs I am interested in, jobs I have applied to, and where each application currently stands.
 
-1. A private job tracker that I can use myself.
-2. A portfolio project that recruiters can open and try without creating an account.
+It is also meant to work as a portfolio project, so recruiters can open it and try the demo without creating an account.
 
 ## Current status
 
-The project currently has a frontend demo mode.
+The app currently has a frontend demo version.
 
-Demo mode uses sample data and saves changes only in the visitor's browser with localStorage. It does not connect to a backend or show real private job applications.
+The demo uses sample data and saves changes only in the browser with localStorage. It does not use a backend, and it does not show any real private job applications.
 
-Private mode, authentication and backend storage will be added later.
+There is also a small private access placeholder on the landing page. Later, that will be used for my own private tracker.
 
-## Features
+## Features so far
 
-- Landing page with demo entry point
-- Demo dashboard
+- Landing page
+- Demo dashboard at `/demo`
 - Add job applications
 - Edit job applications
 - Delete job applications
@@ -26,7 +25,8 @@ Private mode, authentication and backend storage will be added later.
 - Filter jobs by status
 - Dashboard stats
 - Reset demo data
-- Browser-only demo persistence with localStorage
+- Demo data saved in browser localStorage
+- GitHub Actions CI build check
 
 ## Job statuses
 
@@ -42,15 +42,19 @@ Private mode, authentication and backend storage will be added later.
 - TypeScript
 - Vite
 - Tailwind CSS
-- GitHub Actions for CI
+- React Router
+- GitHub Actions
 
 ## CI
 
-The project uses GitHub Actions to automatically install frontend dependencies and run a production build check when changes are pushed or opened in a pull request.
+The project uses GitHub Actions to check that the frontend still builds successfully when changes are pushed or opened in a pull request.
 
-Planned later:
+At the moment, the workflow installs the client dependencies and runs the production build.
 
-- Node.js / Express backend
-- Database for private job data
-- Simple private admin login
+## Planned later
+
+- Private tracker view
+- Simple private/admin password access
+- Backend API
+- Database for real job data
 - Deployment
