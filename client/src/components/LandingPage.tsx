@@ -5,9 +5,25 @@ export default function LandingPage() {
     <div className="min-h-screen px-4 py-10 text-white">
       <div className="mx-auto flex min-h-[80vh] max-w-5xl items-center">
         <div className="w-full rounded-3xl border border-[#03fcf0]/25 bg-[#3a3f42] p-8 shadow-2xl">
-          <p className="text-sm font-semibold uppercase tracking-[0.25em] text-[#03fcf0]">
-            Job Tracker
-          </p>
+          <div className="flex items-start justify-between gap-4">
+            <p className="text-sm font-semibold uppercase tracking-[0.25em] text-[#03fcf0]">
+              Job Tracker
+            </p>
+
+            <div className="text-right opacity-60">
+              <p className="mb-1 text-[10px] font-semibold uppercase tracking-[0.18em] text-gray-400">
+                Private access
+              </p>
+
+              <input
+                type="password"
+                disabled
+                placeholder="admin"
+                title="Private access will be added later"
+                className="w-24 rounded border border-white/10 bg-[#2f3336] px-2 py-1 text-xs text-white placeholder:text-gray-500 outline-none"
+              />
+            </div>
+          </div>
 
           <div className="mt-6 max-w-3xl">
             <h1 className="text-4xl font-bold leading-tight text-white sm:text-5xl">
@@ -20,20 +36,13 @@ export default function LandingPage() {
             </p>
           </div>
 
-          <div className="mt-8 flex flex-col gap-3 sm:flex-row">
+          <div className="mt-8 flex">
             <Link
               to="/demo"
-              className="rounded-full bg-[#03fcf0] px-6 py-3 text-center font-semibold text-[#2f3336] transition-colors hover:bg-cyan-200"
+              className="inline-flex items-center justify-center rounded-full bg-[#03fcf0] px-10 py-4 text-lg font-bold text-[#2f3336] shadow-lg shadow-black/20 transition-colors hover:bg-cyan-200"
             >
               View Demo
             </Link>
-
-            <button
-              disabled
-              className="cursor-not-allowed rounded-full border border-white/15 px-6 py-3 font-semibold text-gray-400"
-            >
-              Sign In Coming Later
-            </button>
           </div>
 
           <div className="mt-8 grid gap-3 sm:grid-cols-3">
@@ -48,8 +57,8 @@ export default function LandingPage() {
             <div className="rounded-2xl border border-white/15 bg-[#34393c] p-4">
               <h2 className="font-semibold text-white">Private mode</h2>
               <p className="mt-2 text-sm text-gray-300">
-                Real job applications will later be protected behind a private
-                sign-in.
+                Real job applications will later be protected with a simple
+                private password.
               </p>
             </div>
 
