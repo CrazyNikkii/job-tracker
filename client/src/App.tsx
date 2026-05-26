@@ -7,7 +7,7 @@ export default function App() {
   const [view, setView] = useState<AppView>("landing");
 
   if (view === "demo") {
-    return <DemoDashboard />;
+    return <DemoDashboard onBackToLanding={() => setView("landing")} />;
   }
 
   return (

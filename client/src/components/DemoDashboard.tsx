@@ -9,7 +9,11 @@ const LOCAL_STORAGE_KEY = "job-tracker-demo-jobs";
 
 type StatusFilter = "All" | JobStatus;
 
-export default function DemoDashboard() {
+interface DemoDashboardProps {
+  onBackToLanding: () => void;
+}
+
+export default function DemoDashboard({ onBackToLanding }: DemoDashboardProps) {
   const [jobs, setJobs] = useState<JobApplication[]>(() => {
     const savedJobs = localStorage.getItem(LOCAL_STORAGE_KEY);
 
@@ -104,12 +108,21 @@ export default function DemoDashboard() {
             </p>
           </div>
 
-          <button
-            onClick={resetDemo}
-            className="rounded-full border border-[#03fcf0]/40 px-4 py-2 text-sm font-semibold text-[#03fcf0] transition-colors hover:bg-[#03fcf0] hover:text-[#2f3336]"
-          >
-            Reset Demo
-          </button>
+          <div className="flex flex-wrap gap-2">
+            <button
+              onClick={onBackToLanding}
+              className="rounded-full border border-white/15 px-4 py-2 text-sm font-semibold text-gray-300 transition-colors hover:border-[#03fcf0] hover:text-[#03fcf0]"
+            >
+              Back
+            </button>
+
+            <button
+              onClick={resetDemo}
+              className="rounded-full border border-[#03fcf0]/40 px-4 py-2 text-sm font-semibold text-[#03fcf0] transition-colors hover:bg-[#03fcf0] hover:text-[#2f3336]"
+            >
+              Reset Demo
+            </button>
+          </div>
         </div>
 
         <DashboardStats jobs={jobs} />
