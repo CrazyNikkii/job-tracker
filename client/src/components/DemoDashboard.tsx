@@ -124,7 +124,13 @@ export default function DemoDashboard({ onBackToLanding }: DemoDashboardProps) {
             </button>
           </div>
         </div>
-
+        <div className="mb-6 rounded-2xl border border-[#03fcf0]/25 bg-[#34393c] p-4">
+          <p className="text-sm text-gray-300">
+            This demo uses sample data and saves changes only in your browser.
+            It does not connect to a backend or show real private job
+            applications.
+          </p>
+        </div>
         <DashboardStats jobs={jobs} />
 
         <div className="mb-6 flex flex-wrap gap-2">
