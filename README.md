@@ -42,6 +42,11 @@ Private mode, authentication and backend storage will be added later.
 - TypeScript
 - Vite
 - Tailwind CSS
+- GitHub Actions for CI
+
+## CI
+
+The project uses GitHub Actions to automatically install frontend dependencies and run a production build check when changes are pushed or opened in a pull request.
 
 Planned later:
 
