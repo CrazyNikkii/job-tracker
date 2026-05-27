@@ -64,4 +64,20 @@ router.post("/", (req, res) => {
   return res.status(201).json(newJob);
 });
 
+router.delete("/:id", (req, res) => {
+  const { id } = req.params;
+
+  const jobIndex = jobs.findIndex((job) => job.id === id);
+
+  if (jobIndex === -1) {
+    return res.status(404).json({
+      error: "Job not found",
+    });
+  }
+
+  const deletedJob = jobs.splice(jobIndex, 1)[0];
+
+  return res.json(deletedJob);
+});
+
 export default router;
