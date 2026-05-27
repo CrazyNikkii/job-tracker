@@ -1,5 +1,5 @@
 import { Router } from "express";
-import type { JobApplication } from "./jobTypes.js";
+import type { JobApplication, JobStatus } from "./jobTypes.js";
 
 const router = Router();
 
@@ -13,8 +13,55 @@ const jobs: JobApplication[] = [
   },
 ];
 
+const validStatuses: JobStatus[] = [
+  "Interested",
+  "Applied",
+  "Interview Scheduled",
+  "Rejected",
+  "Accepted",
+];
+
 router.get("/", (_req, res) => {
   res.json(jobs);
+});
+
+router.post("/", (req, res) => {
+  const { company, position, status, jobUrl } = req.body;
+
+  if (
+    typeof company !== "string" ||
+    typeof position !== "string" ||
+    typeof status !== "string" ||
+    typeof jobUrl !== "string"
+  ) {
+    return res.status(400).json({
+      error: "Invalid job data",
+    });
+  }
+
+  if (!company.trim()) {
+    return res.status(400).json({
+      error: "Company is required",
+    });
+  }
+
+  if (!validStatuses.includes(status as JobStatus)) {
+    return res.status(400).json({
+      error: "Invalid job status",
+    });
+  }
+
+  const newJob: JobApplication = {
+    id: Date.now().toString(),
+    company: company.trim(),
+    position: position.trim(),
+    status: status as JobStatus,
+    jobUrl: jobUrl.trim(),
+  };
+
+  jobs.push(newJob);
+
+  return res.status(201).json(newJob);
 });
 
 export default router;
