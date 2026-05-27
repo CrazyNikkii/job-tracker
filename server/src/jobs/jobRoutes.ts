@@ -64,6 +64,54 @@ router.post("/", (req, res) => {
   return res.status(201).json(newJob);
 });
 
+router.put("/:id", (req, res) => {
+  const { id } = req.params;
+  const { company, position, status, jobUrl } = req.body;
+
+  const jobIndex = jobs.findIndex((job) => job.id === id);
+
+  if (jobIndex === -1) {
+    return res.status(404).json({
+      error: "Job not found",
+    });
+  }
+
+  if (
+    typeof company !== "string" ||
+    typeof position !== "string" ||
+    typeof status !== "string" ||
+    typeof jobUrl !== "string"
+  ) {
+    return res.status(400).json({
+      error: "Invalid job data",
+    });
+  }
+
+  if (!company.trim()) {
+    return res.status(400).json({
+      error: "Company is required",
+    });
+  }
+
+  if (!validStatuses.includes(status as JobStatus)) {
+    return res.status(400).json({
+      error: "Invalid job status",
+    });
+  }
+
+  const updatedJob: JobApplication = {
+    id,
+    company: company.trim(),
+    position: position.trim(),
+    status: status as JobStatus,
+    jobUrl: jobUrl.trim(),
+  };
+
+  jobs[jobIndex] = updatedJob;
+
+  return res.json(updatedJob);
+});
+
 router.delete("/:id", (req, res) => {
   const { id } = req.params;
 
