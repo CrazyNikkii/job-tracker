@@ -1,6 +1,7 @@
 import cors from "cors";
 import express from "express";
 import jobRoutes from "./jobs/jobRoutes.js";
+import authRoutes from "./auth/authRoutes.js";
 
 const CLIENT_ORIGIN = process.env.CLIENT_ORIGIN ?? "http://localhost:5173";
 
@@ -13,6 +14,7 @@ app.use(
 );
 
 app.use(express.json());
+app.use("/auth", authRoutes);
 
 app.get("/health", (_req, res) => {
   res.json({
