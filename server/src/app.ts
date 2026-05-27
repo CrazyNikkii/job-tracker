@@ -2,6 +2,7 @@ import cors from "cors";
 import express from "express";
 import jobRoutes from "./jobs/jobRoutes.js";
 import authRoutes from "./auth/authRoutes.js";
+import { requireAuth } from "./auth/requireAuth.js";
 
 const CLIENT_ORIGIN = process.env.CLIENT_ORIGIN ?? "http://localhost:5173";
 
@@ -23,4 +24,4 @@ app.get("/health", (_req, res) => {
   });
 });
 
-app.use("/api/jobs", jobRoutes);
+app.use("/api/jobs", requireAuth, jobRoutes);

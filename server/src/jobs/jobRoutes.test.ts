@@ -2,9 +2,20 @@ import request from "supertest";
 import { describe, expect, it } from "vitest";
 import { app } from "../app.js";
 
+const authToken = "test-token";
+
+process.env.AUTH_TOKEN = authToken;
+
 describe("jobs API", () => {
+  it("rejects requests without auth token", async () => {
+    await request(app).get("/api/jobs").expect(401);
+  });
+
   it("returns the jobs list", async () => {
-    const response = await request(app).get("/api/jobs").expect(200);
+    const response = await request(app)
+      .get("/api/jobs")
+      .set("Authorization", `Bearer ${authToken}`)
+      .expect(200);
 
     expect(Array.isArray(response.body)).toBe(true);
   });
@@ -12,6 +23,7 @@ describe("jobs API", () => {
   it("creates, updates and deletes a job", async () => {
     const createdResponse = await request(app)
       .post("/api/jobs")
+      .set("Authorization", `Bearer ${authToken}`)
       .send({
         company: "Test Company",
         position: "React Developer",
@@ -30,6 +42,7 @@ describe("jobs API", () => {
 
     const updatedResponse = await request(app)
       .put(`/api/jobs/${jobId}`)
+      .set("Authorization", `Bearer ${authToken}`)
       .send({
         company: "Updated Company",
         position: "Full Stack Developer",
@@ -44,16 +57,21 @@ describe("jobs API", () => {
 
     const deletedResponse = await request(app)
       .delete(`/api/jobs/${jobId}`)
+      .set("Authorization", `Bearer ${authToken}`)
       .expect(200);
 
     expect(deletedResponse.body.id).toBe(jobId);
 
-    await request(app).delete(`/api/jobs/${jobId}`).expect(404);
+    await request(app)
+      .delete(`/api/jobs/${jobId}`)
+      .set("Authorization", `Bearer ${authToken}`)
+      .expect(404);
   });
 
   it("rejects invalid job data", async () => {
     await request(app)
       .post("/api/jobs")
+      .set("Authorization", `Bearer ${authToken}`)
       .send({
         company: "",
         position: "React Developer",
@@ -64,6 +82,7 @@ describe("jobs API", () => {
 
     await request(app)
       .post("/api/jobs")
+      .set("Authorization", `Bearer ${authToken}`)
       .send({
         company: "Test Company",
         position: "React Developer",
