@@ -1,7 +1,7 @@
 import { BrowserRouter, Navigate, Route, Routes } from "react-router-dom";
 import DemoDashboard from "./components/DemoDashboard";
 import LandingPage from "./components/LandingPage";
-import PrivateAppPlaceholder from "./components/PrivateAppPlaceholder";
+import PrivateDashboard from "./components/PrivateDashboard";
 
 export default function App() {
   return (
@@ -10,7 +10,7 @@ export default function App() {
         <Route path="/" element={<LandingPage />} />
         <Route path="/demo" element={<DemoDashboard />} />
         <Route path="*" element={<Navigate to="/" replace />} />
-        <Route path="/app" element={<PrivateAppPlaceholder />} />
+        <Route path="/app" element={<PrivateDashboard />} />
       </Routes>
     </BrowserRouter>
   );
