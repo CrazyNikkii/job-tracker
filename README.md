@@ -1,60 +1,40 @@
 # Job Tracker
 
-A simple job application tracker built with React, TypeScript, Vite and Tailwind CSS.
+A small job application tracker built as a personal tool and portfolio project.
 
-The idea is pretty straightforward: I wanted a small app where I can keep track of jobs I am interested in, jobs I have applied to, and where each application currently stands.
+The app has a public demo for recruiters and a private version for my own job search tracking.
 
-It is also meant to work as a portfolio project, so recruiters can open it and try the demo without creating an account.
+## Status
 
-## Current status
+The main app structure is working:
 
-The app currently has a frontend demo version.
+- `/demo` uses sample data and localStorage
+- `/app` uses a backend API and PostgreSQL
+- private access uses a simple password flow
+- CI checks frontend build, backend tests and backend build
 
-The demo uses sample data and saves changes only in the browser with localStorage. It does not use a backend, and it does not show any real private job applications.
+The app is not deployed yet.
 
-There is also a small private access placeholder on the landing page. Later, that will be used for my own private tracker.
+## Features
 
-## Features so far
-
-- Landing page
-- Demo dashboard at `/demo`
-- Add job applications
-- Edit job applications
-- Delete job applications
-- Save job posting URLs
-- Filter jobs by status
+- Track job applications with company, role, status and job posting URL
+- Add, edit, delete and filter applications
 - Dashboard stats
-- Reset demo data
-- Demo data saved in browser localStorage
-- GitHub Actions CI build check
-
-## Job statuses
-
-- Interested
-- Applied
-- Interview Scheduled
-- Rejected
-- Accepted
+- Public demo mode
+- Private backend-connected mode
 
 ## Tech stack
 
-- React
-- TypeScript
-- Vite
-- Tailwind CSS
-- React Router
+- React, TypeScript, Vite, Tailwind CSS
+- Node.js, Express, PostgreSQL
+- Supabase
+- Vitest, Supertest
 - GitHub Actions
 
-## CI
+## Deployment plan
 
-The project uses GitHub Actions to check that the frontend still builds successfully when changes are pushed or opened in a pull request.
+The plan is to deploy the full app on Render, with Express serving both the backend API and the built React frontend.
 
-At the moment, the workflow installs the client dependencies and runs the production build.
+The app will later be connected to a subdomain such as:
 
-## Planned later
-
-- Private tracker view
-- Simple private/admin password access
-- Backend API
-- Database for real job data
-- Deployment
+`jobtracker.niklasfalck.fi`
