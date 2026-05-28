@@ -4,11 +4,13 @@ import { validateJobBody } from "./jobValidation.js";
 
 const router = Router();
 
-router.get("/", (_req, res) => {
-  res.json(getJobs());
+router.get("/", async (_req, res) => {
+  const jobs = await getJobs();
+
+  res.json(jobs);
 });
 
-router.post("/", (req, res) => {
+router.post("/", async (req, res) => {
   const jobData = validateJobBody(req.body);
 
   if (!jobData) {
@@ -17,12 +19,12 @@ router.post("/", (req, res) => {
     });
   }
 
-  const newJob = createJob(jobData);
+  const newJob = await createJob(jobData);
 
   return res.status(201).json(newJob);
 });
 
-router.put("/:id", (req, res) => {
+router.put("/:id", async (req, res) => {
   const jobData = validateJobBody(req.body);
 
   if (!jobData) {
@@ -31,7 +33,7 @@ router.put("/:id", (req, res) => {
     });
   }
 
-  const updatedJob = updateJob(req.params.id, jobData);
+  const updatedJob = await updateJob(req.params.id, jobData);
 
   if (!updatedJob) {
     return res.status(404).json({
@@ -42,8 +44,8 @@ router.put("/:id", (req, res) => {
   return res.json(updatedJob);
 });
 
-router.delete("/:id", (req, res) => {
-  const deletedJob = deleteJob(req.params.id);
+router.delete("/:id", async (req, res) => {
+  const deletedJob = await deleteJob(req.params.id);
 
   if (!deletedJob) {
     return res.status(404).json({

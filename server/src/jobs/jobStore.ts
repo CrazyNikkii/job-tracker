@@ -1,14 +1,5 @@
+import { pool } from "../db/index.js";
 import type { JobApplication, JobStatus } from "./jobTypes.js";
-
-const jobs: JobApplication[] = [
-  {
-    id: "1",
-    company: "Example Company",
-    position: "Frontend Developer",
-    status: "Interested",
-    jobUrl: "https://example.com",
-  },
-];
 
 export const validStatuses: JobStatus[] = [
   "Interested",
@@ -18,46 +9,90 @@ export const validStatuses: JobStatus[] = [
   "Accepted",
 ];
 
-export function getJobs() {
-  return jobs;
+interface JobRow {
+  id: string;
+  company: string;
+  position: string;
+  status: JobStatus;
+  job_url: string;
 }
 
-export function createJob(jobData: Omit<JobApplication, "id">) {
-  const newJob: JobApplication = {
-    id: Date.now().toString(),
-    ...jobData,
+function mapRowToJob(row: JobRow): JobApplication {
+  return {
+    id: row.id,
+    company: row.company,
+    position: row.position,
+    status: row.status,
+    jobUrl: row.job_url,
   };
-
-  jobs.push(newJob);
-
-  return newJob;
 }
 
-export function updateJob(id: string, jobData: Omit<JobApplication, "id">) {
-  const jobIndex = jobs.findIndex((job) => job.id === id);
+export async function getJobs() {
+  const result = await pool.query<JobRow>(`
+    SELECT id, company, position, status, job_url
+    FROM jobs
+    ORDER BY company ASC;
+  `);
 
-  if (jobIndex === -1) {
+  return result.rows.map(mapRowToJob);
+}
+
+export async function createJob(jobData: Omit<JobApplication, "id">) {
+  const id = Date.now().toString();
+
+  const result = await pool.query<JobRow>(
+    `
+      INSERT INTO jobs (id, company, position, status, job_url)
+      VALUES ($1, $2, $3, $4, $5)
+      RETURNING id, company, position, status, job_url;
+    `,
+    [id, jobData.company, jobData.position, jobData.status, jobData.jobUrl],
+  );
+
+  return mapRowToJob(result.rows[0]);
+}
+
+export async function updateJob(
+  id: string,
+  jobData: Omit<JobApplication, "id">,
+) {
+  const result = await pool.query<JobRow>(
+    `
+      UPDATE jobs
+      SET company = $1,
+          position = $2,
+          status = $3,
+          job_url = $4
+      WHERE id = $5
+      RETURNING id, company, position, status, job_url;
+    `,
+    [jobData.company, jobData.position, jobData.status, jobData.jobUrl, id],
+  );
+
+  const updatedJob = result.rows[0];
+
+  if (!updatedJob) {
     return null;
   }
 
-  const updatedJob: JobApplication = {
-    id,
-    ...jobData,
-  };
-
-  jobs[jobIndex] = updatedJob;
-
-  return updatedJob;
+  return mapRowToJob(updatedJob);
 }
 
-export function deleteJob(id: string) {
-  const jobIndex = jobs.findIndex((job) => job.id === id);
+export async function deleteJob(id: string) {
+  const result = await pool.query<JobRow>(
+    `
+      DELETE FROM jobs
+      WHERE id = $1
+      RETURNING id, company, position, status, job_url;
+    `,
+    [id],
+  );
 
-  if (jobIndex === -1) {
+  const deletedJob = result.rows[0];
+
+  if (!deletedJob) {
     return null;
   }
 
-  const deletedJob = jobs.splice(jobIndex, 1)[0];
-
-  return deletedJob;
+  return mapRowToJob(deletedJob);
 }
