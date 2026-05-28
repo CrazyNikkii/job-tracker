@@ -15,7 +15,7 @@ export default function LandingPage() {
     try {
       setLoginError("");
       await login(password);
-      navigate("/app");
+      navigate("/app", { replace: true });
     } catch {
       setLoginError("Invalid password");
     }
