@@ -1,40 +1,58 @@
 # Job Tracker
 
-A small job application tracker built as a personal tool and portfolio project.
+A full-stack job application tracker built as a personal tool and portfolio project.
 
 The app has a public demo for recruiters and a private version for my own job search tracking.
 
-## Status
+Live app:
 
-The main app structure is working:
+`https://jobtracker.niklasfalck.fi`
 
-- `/demo` uses sample data and localStorage
-- `/app` uses a backend API and PostgreSQL
-- private access uses a simple password flow
-- CI checks frontend build, backend tests and backend build
+## Overview
 
-The app is not deployed yet.
+Job Tracker helps keep job applications organized by saving the company, role, status and job posting URL in one place.
+
+The project has two modes:
+
+- `/demo` is a public demo using sample data and localStorage
+- `/app` is the private tracker using a backend API and PostgreSQL
 
 ## Features
 
-- Track job applications with company, role, status and job posting URL
-- Add, edit, delete and filter applications
-- Dashboard stats
 - Public demo mode
-- Private backend-connected mode
+- Private job tracker mode
+- Add, edit, delete and filter job applications
+- Dashboard stats
+- Job posting URL support
+- Password-protected private access
+- PostgreSQL-backed private data
 
 ## Tech stack
 
-- React, TypeScript, Vite, Tailwind CSS
-- Node.js, Express, PostgreSQL
+- React
+- TypeScript
+- Vite
+- Tailwind CSS
+- React Router
+- Node.js
+- Express
+- PostgreSQL
 - Supabase
-- Vitest, Supertest
+- Render
+- Vitest
+- Supertest
 - GitHub Actions
 
-## Deployment plan
+## CI/CD
 
-The plan is to deploy the full app on Render, with Express serving both the backend API and the built React frontend.
+GitHub Actions runs build and backend API tests, and Render automatically deploys the main branch.
 
-The app will later be connected to a subdomain such as:
+## Deployment
 
-`jobtracker.niklasfalck.fi`
+The app is deployed on Render as a full-stack web service.
+
+Express serves both the backend API and the built React frontend. PostgreSQL is hosted on Supabase.
+
+The app is available at:
+
+`https://jobtracker.niklasfalck.fi`
