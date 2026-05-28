@@ -1,6 +1,26 @@
-import { Link } from "react-router-dom";
+import { useState } from "react";
+import { Link, useNavigate } from "react-router-dom";
+import { login } from "../api/authApi";
 
 export default function LandingPage() {
+  const [password, setPassword] = useState("");
+  const [loginError, setLoginError] = useState("");
+  const navigate = useNavigate();
+
+  const handlePrivateLogin = async (event: React.FormEvent) => {
+    event.preventDefault();
+
+    if (!password.trim()) return;
+
+    try {
+      setLoginError("");
+      await login(password);
+      navigate("/app");
+    } catch {
+      setLoginError("Invalid password");
+    }
+  };
+
   return (
     <div className="min-h-screen px-4 py-10 text-white">
       <div className="mx-auto flex min-h-[80vh] max-w-5xl items-center">
@@ -10,19 +30,26 @@ export default function LandingPage() {
               Job Tracker
             </p>
 
-            <div className="text-right opacity-60">
+            <form
+              onSubmit={handlePrivateLogin}
+              className="text-right opacity-70"
+            >
               <p className="mb-1 text-[10px] font-semibold uppercase tracking-[0.18em] text-gray-400">
                 Private access
               </p>
 
               <input
                 type="password"
-                disabled
+                value={password}
+                onChange={(event) => setPassword(event.target.value)}
                 placeholder="admin"
-                title="Private access will be added later"
-                className="w-24 rounded border border-white/10 bg-[#2f3336] px-2 py-1 text-xs text-white placeholder:text-gray-500 outline-none"
+                className="w-24 rounded border border-white/10 bg-[#2f3336] px-2 py-1 text-xs text-white placeholder:text-gray-500 outline-none transition-colors focus:border-[#03fcf0]"
               />
-            </div>
+
+              {loginError && (
+                <p className="mt-1 text-[10px] text-red-300">{loginError}</p>
+              )}
+            </form>
           </div>
 
           <div className="mt-6 max-w-3xl">
