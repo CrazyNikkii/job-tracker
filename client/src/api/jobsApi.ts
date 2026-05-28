@@ -1,6 +1,8 @@
 import type { JobApplication } from "../types";
 
-const API_URL = import.meta.env.VITE_API_URL ?? "http://localhost:5000";
+const API_URL = import.meta.env.DEV
+  ? (import.meta.env.VITE_API_URL ?? "http://localhost:5000")
+  : "";
 const AUTH_TOKEN_STORAGE_KEY = "job-tracker-auth-token";
 
 type JobInput = Omit<JobApplication, "id">;
