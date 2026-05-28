@@ -54,6 +54,9 @@ jobs:
 
       - name: Test server
         run: npm test
+        env:
+          DATABASE_URL: ${{ secrets.DATABASE_URL }}
+          AUTH_TOKEN: ${{ secrets.AUTH_TOKEN }}
 
       - name: Build server
         run: npm run build
