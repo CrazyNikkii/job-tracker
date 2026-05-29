@@ -84,8 +84,8 @@ export default function LandingPage() {
             <div className="rounded-2xl border border-white/15 bg-[#34393c] p-4">
               <h2 className="font-semibold text-white">Private mode</h2>
               <p className="mt-2 text-sm text-gray-300">
-                Real job applications will later be protected with a simple
-                private password.
+                Real job applications are protected with a private password and
+                stored through the backend in PostgreSQL.
               </p>
             </div>
 
